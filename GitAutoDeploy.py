@@ -71,12 +71,21 @@ class GitAutoDeploy(BaseHTTPRequestHandler):
 
     def deploy(self, path):
         config = self.getConfig()
+        cmd = "";
         for repository in config['repositories']:
             if(repository['path'] == path):
                 if 'deploy' in repository:
-                     if(not self.quiet):
-                         print 'Executing deploy command'
-                     call(['cd "' + path + '" && ' + repository['deploy']], shell=True)
+                    if isinstance(repository['deploy'], str):
+                        if(not self.quiet):
+                            print 'Assuming deploy script is a single command string'
+                        cmd = repository['deploy']
+                    else:
+                        if(not self.quiet):
+                            print 'Assuming deploy script is array of individual commands'
+                        cmd = " && ".join( repository['deploy'] )
+                    if(not self.quiet):
+                         print 'Executing deploy command: %s' % cmd
+                    call(['cd "' + path + '" && ' + cmd], shell=True)
                 break
 
 def main():
