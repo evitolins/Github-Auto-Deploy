@@ -5,7 +5,18 @@
 		"url": "https://github.com/logsol/Test-Repo", 
 		"path": "/home/logsol/projects/Test-Repo",
 		"deploy": "echo deploying"
-	}, 
+	},
+	{
+		"url": "https://github.com/rgblabs/Test-Repo", 
+		"path": "/var/www/rgblabs_test/",
+		"deploy": [
+			"echo deploying rgblabs_test",
+			"cp /var/www/templates/config.json /var/www/rgblabs_test/",
+			"cp /var/www/macros/composer.phar /var/www/rgblabs_test/",
+			"cd /var/www/rgblabs_test/",
+			"php composer.phar update"
+		]
+	}, 	
 	{
 		"url": "https://github.com/logsol/Katharsis-Framework",
 		"path": "/home/logsol/projects/Katharsis-Framework"
