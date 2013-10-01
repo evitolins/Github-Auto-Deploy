@@ -75,6 +75,7 @@ class GitAutoDeploy(BaseHTTPRequestHandler):
         for repository in config['repositories']:
             if(repository['path'] == path):
                 if 'deploy' in repository:
+                    print type(repository['deploy'])
                     if isinstance(repository['deploy'], str):
                         if(not self.quiet):
                             print 'Assuming deploy script is a single command string'
